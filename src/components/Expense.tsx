@@ -1,16 +1,23 @@
-import React from 'react';
 import styled from 'styled-components';
 import { formatRoman } from '../lib/formatRoman';
 import { formatMoney } from '../lib/formatMoney';
 
-export default function Expense({index, name, price, place}: ExpenseProps) {
+type ExpenseProps = {
+	index: number;
+	name: string,
+	price: number;
+	place: string;
+}
+
+export default function Expense({ index, name, price, place }: ExpenseProps) {
 	return (
 		<tr>
 			<YellowTd align="center">{formatRoman(index)}</YellowTd>
 			<YellowTd align="left">{name}</YellowTd>
 			<YellowTd align="left">{formatMoney(price)}</YellowTd>
 			<YellowTd align="left">{place}</YellowTd>
-		</tr>)
+		</tr>
+	);
 }
 
 const YellowTd = styled.td`
@@ -18,10 +25,3 @@ const YellowTd = styled.td`
 	color: #000;
 	text-align: ${props => props.align};
 `;
-
-type ExpenseProps = {
-	index: number;
-	name: string;
-	price: number;
-	place: string;
-};

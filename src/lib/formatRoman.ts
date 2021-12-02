@@ -1,3 +1,4 @@
+// 아라비아 숫자를 로마 숫자로 바꿔주는 함수
 export const formatRoman = (num: number): string => {
 	let roman = "";
 	const romanNumList: { [key: string]: number } = {

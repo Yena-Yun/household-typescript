@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import {formatDate} from '../lib/formatDate';
 import {formatMoney} from '../lib/formatMoney';
@@ -6,17 +5,21 @@ import {formatMoney} from '../lib/formatMoney';
 type DailyProps = {
 	index: number;
 	date: string;
-	income: number,
-	total: number,
+	income: number;
+	total: number;
 	children: JSX.Element[];
-};
+}
 
-export default function Daily({index, date, income, total, children}: DailyProps) {
+type LimeTdProps = {
+	minus?: boolean;
+}
+
+export default function Daily({ index, date, income, total, children }: DailyProps) {
 	return (
 		<tbody>
 			<tr>
-				<IndexTd rowSpan={children.length + 5}>{index}</IndexTd>
-				<GreenTd align="center">날짜:{formatDate(date)}</GreenTd>
+				<IndexTd align="center" rowSpan={children.length + 5}>{index}</IndexTd>
+				<GreenTd align="center">날짜: {formatDate(date)}</GreenTd>
 				<GreenTd align="center">수입</GreenTd>
 				<GreenTd align="left" colSpan={2}>{formatMoney(income)}</GreenTd>
 			</tr>
@@ -37,9 +40,13 @@ export default function Daily({index, date, income, total, children}: DailyProps
 			</tr>
 			<tr>
 				<LimeTd align="center">잔액</LimeTd>
-				<LimeTd align="left" colSpan={3}>{formatMoney(income - total)}</LimeTd>
+				<LimeTd align="left" colSpan={3} minus={income < total}>
+					{income < total ? '[적자]' : null}
+					{formatMoney(income - total)}
+				</LimeTd>
 			</tr>
-			</tbody>)
+		</tbody>
+	);
 }
 
 const IndexTd = styled.td`
@@ -53,9 +60,9 @@ const GreenTd = styled.td`
 	text-align: ${props => props.align};
 `;
 
-const LimeTd = styled.td`
+const LimeTd = styled.td<LimeTdProps>`
 	background: #bfff00;
-	color: #000;
+	color: ${props => (props.minus ? "#ff0000" : "#000")};
 	text-align: ${props => props.align};
 `;
 

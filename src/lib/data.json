@@ -5,21 +5,25 @@
       "income": 200000,
       "expenses": [
         {
+          "id": 1,
           "name": "볼펜",
           "price": 1000,
           "place": "인하문구"
         },
         {
+          "id": 2,
           "name": "시계",
           "price": 100000,
           "place": "인하금방"
         },
         {
+          "id": 3,
           "name": "책",
           "price": 10000,
           "place": "공룡서점"
         },
         {
+          "id": 4,
           "name": "노트",
           "price": 10000,
           "place": "인하문구"
@@ -31,17 +35,19 @@
       "income": 300000,
       "expenses": [
         {
+          "id": 5,
           "name": "우유",
           "price": 6000,
           "place": "인하슈퍼"
         },
         {
+          "id": 6,
           "name": "과자",
           "price": 10000,
           "place": "인하슈퍼"
         },
-
         {
+          "id": 7,
           "name": "콜라",
           "price": 1500,
           "place": "인하슈퍼"
@@ -54,36 +60,43 @@
       "income": 2000000,
       "expenses": [
         {
+          "id": 8,
           "name": "인형",
           "price": 10000,
           "place": "인하슈퍼"
         },
         {
+          "id": 9,
           "name": "껌",
           "price": 100,
           "place": "인하슈퍼"
         },
         {
+          "id": 10,
           "name": "CD",
           "price": 5000,
           "place": "신나라레코드"
         },
         {
+          "id": 11,
           "name": "모니터",
           "price": 105000,
           "place": "컴퓨터세상"
         },
         {
+          "id": 12,
           "name": "빵",
           "price": 1000,
           "place": "빵시장"
         },
         {
+          "id": 13,
           "name": "콩나물",
           "price": 1000,
           "place": "동네슈퍼"
         },
         {
+          "id": 14,
           "name": "컴퓨터",
           "price": 2000000,
           "place": "컴퓨터세상"
