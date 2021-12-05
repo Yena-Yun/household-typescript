@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import {formatDate} from '../lib/formatDate';
-import {formatMoney} from '../lib/formatMoney';
+import {formatDate} from 'lib/formatDate';
+import {formatMoney} from 'lib/formatMoney';
 
 type DailyProps = {
 	index: number;

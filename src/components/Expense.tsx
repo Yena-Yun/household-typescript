@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { formatRoman } from '../lib/formatRoman';
-import { formatMoney } from '../lib/formatMoney';
+import { formatRoman } from 'lib/formatRoman';
+import { formatMoney } from 'lib/formatMoney';
 
 type ExpenseProps = {
 	index: number;

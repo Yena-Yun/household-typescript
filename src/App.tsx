@@ -1,7 +1,7 @@
-import { data } from './lib/data.json';
-import Household from './components/Household';
-import Daily from './components/Daily';
-import Expense from './components/Expense';
+import { data } from 'lib/data.json';
+import Household from 'components/Household';
+import Daily from 'components/Daily';
+import Expense from 'components/Expense';
 
 function App() {
   const sortedData = data.sort((a, b) => {
