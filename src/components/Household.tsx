@@ -14,6 +14,6 @@ export default function Household({ children }: HouseholdProps) {
 }
 
 const Wrapper = styled.table`
-	/* Todo: css 추가 */
+	flex: 1;
 `;
 

@@ -3,13 +3,14 @@ import { formatRoman } from 'lib/formatRoman';
 import { formatMoney } from 'lib/formatMoney';
 
 type ExpenseProps = {
+	id: number;
 	index: number;
 	name: string,
 	price: number;
 	place: string;
 }
 
-export default function Expense({ index, name, price, place }: ExpenseProps) {
+export default function Expense({ id, index, name, price, place }: ExpenseProps) {
 	return (
 		<tr>
 			<YellowTd align="center">{formatRoman(index)}</YellowTd>

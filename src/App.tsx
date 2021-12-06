@@ -1,17 +1,22 @@
-import { data } from 'lib/data.json';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { data as initialData } from 'lib/data.json';
 import Household from 'components/Household';
 import Daily from 'components/Daily';
 import Expense from 'components/Expense';
+import Form from 'components/Form';
 
 function App() {
+  const [data, setData] = useState(initialData);
+
   const sortedData = data.sort((a, b) => {
     if (a.date > b.date) return 1;
-    else if (a.date < b.date) return -1;
+    else if (b.date > a.date) return -1;
     else return 0;
   }).map((daily) => {
     const sortedExpenses = daily.expenses.sort((a, b) => {
-      if (a.place > b.place) return 1;
-      else if (a.place < b.place) return -1;
+      if (a.place > b.place) return -1;
+      else if (b.place > a.place) return 1;
       else return 0;
     });
 
@@ -22,7 +27,7 @@ function App() {
   });
 
   return (
-    <>
+    <Container>
       <Household>
         {sortedData.map((daily, idx) => (
           <Daily
@@ -35,6 +40,7 @@ function App() {
             {daily.expenses.map((expense, idx) => (
               <Expense
                 key={idx}
+                id={expense.id}
                 index={idx + 1}
                 name={expense.name}
                 price={expense.price}
@@ -43,8 +49,13 @@ function App() {
           </Daily>
         ))}
       </Household>
-    </>
+      <Form data={data} setData={setData} />
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+`;
 
 export default App;

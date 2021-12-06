@@ -22,6 +22,7 @@ type Data = {
 	date: string;
 	income: number;
 	expenses: {
+		id: number;
 		name: string;
 		price: number;
 		place: string;
@@ -42,11 +43,9 @@ export default function Form({ data, setData }: FormProps) {
 
 	const handleAdd = (): void => {
 		if (!date) {
-			//오류
 			return;
 		}
 		if (isNaN(Number(price))) {
-			//오류
 			return;
 		}
 
@@ -57,10 +56,17 @@ export default function Form({ data, setData }: FormProps) {
 
 		const strDate = year + (month[1] ? month : "0" + month) + (day[1] ? day : "0" + day);
 
-		const selectDataIndex = data.findIndex(daily => daily.date === strDate);
+		const selectDailyIndex = data.findIndex(daily => daily.date === strDate);
+
+		const maxId = data.reduce((acc, daily) => {
+			const maxDailyId = daily.expenses.reduce((acc, expense) => (
+				expense.id > acc ? expense.id : acc
+			), 0);
+			return maxDailyId > acc ? maxDailyId : acc;
+		}, 0); 
 
 		// 기존 data에 없으면 새로 추가
-		if (selectDataIndex === -1) {
+		if (selectDailyIndex === -1) {
 			setData([
 				...data,
 				{
@@ -68,6 +74,7 @@ export default function Form({ data, setData }: FormProps) {
 					income: 0,
 					expenses: [
 						{
+							id: maxId + 1,
 							name,
 							price: Number(price),
 							place
@@ -77,10 +84,16 @@ export default function Form({ data, setData }: FormProps) {
 			])
 			// 있으면 기존꺼 수정
 		} else {
-			const filteredData = data.filter(daily => daily.date !== strDate);
-			const selectData = data[selectDataIndex];
-			selectData.expenses.push({ name, price: Number(price), place });
-			setData([...filteredData, selectData]);
+			const filteredDaily = data.filter(daily => daily.date !== strDate);
+			const selectedDaily = data[selectDailyIndex];
+			selectedDaily.expenses.push({
+				// 수정한 Daily가 맨 뒤(또는 맨 앞)으로 오도록..?
+				id: maxId + 1,
+				name,
+				price: Number(price),
+				place
+			});
+			setData([...filteredDaily, selectedDaily]);
 		}
 
 		console.log(data)
