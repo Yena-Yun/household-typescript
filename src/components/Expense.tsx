@@ -19,6 +19,7 @@ export default function Expense({ id, index, name, price, place, onRemove }: Exp
 			<YellowTd align="left">{formatMoney(price)}</YellowTd>
 			<YellowTd align="left">
 				{place}
+				{/* 삭제버튼 위치: 구입처 cell 내부 */}
 				<RemoveButton onClick={() => onRemove(id)}>&times;</RemoveButton>
 			</YellowTd>
 		</Wrapper>
@@ -33,7 +34,8 @@ const RemoveButton = styled.div`
 	margin: 0;
 	padding: 0;
 	cursor: pointer;
-	// 안 보였다가
+
+	// 처음엔 안 보였다가
 	display: none;
 	// Wrapper에 hover하면 보임
 	${Wrapper}:hover & {
