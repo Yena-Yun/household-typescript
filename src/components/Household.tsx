@@ -7,8 +7,8 @@ type HouseholdProps = {
 export default function Household({ children }: HouseholdProps) {
 	return (
 		<Wrapper>
+			<Title>수입지출 내역</Title>
 			<HouseholdTable>
-				<caption>가계부</caption>
 				{children}
 			</HouseholdTable>
 		</Wrapper>
@@ -17,8 +17,15 @@ export default function Household({ children }: HouseholdProps) {
 
 const Wrapper = styled.div`
 	flex: 1;
+	margin: 0 0 0 20px;
 `;
 
 const HouseholdTable = styled.table`
 	width: 420px;
+`;
+
+const Title = styled.div`
+	font-weight: 700;
+	/* text-align: center; */
+	margin: 12px 0 8px;
 `;

@@ -121,6 +121,7 @@ export default function Form({ data, setData }: FormProps) {
 
 	return (
 		<Wrapper>
+			<Title>항목 추가</Title>
 			<MuiPickersUtilsProvider utils={DateFnsUtils} locale={koLocale}>
 				<KeyboardDatePicker
 					variant="inline"
@@ -192,9 +193,13 @@ export default function Form({ data, setData }: FormProps) {
 	)
 }
 
+const Title = styled.div`
+	font-weight: 700;
+	margin: 8px 0 0;
+`;
+
 const Wrapper = styled.div`
 	flex: 1;
 	text-align: center;
-	margin: 0 40px;
-	background: lightyellow;
+	margin: 0 20px 0 0;
 `;

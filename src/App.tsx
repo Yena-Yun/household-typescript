@@ -13,8 +13,8 @@ function App() {
 
   // data를 날짜별로 정렬 후 
   const sortedData = data.sort((a, b) => {
-    if (a.date > b.date) return 1;
-    else if (b.date > a.date) return -1;
+    if (a.date > b.date) return -1;
+    else if (b.date > a.date) return 1;
     else return 0;
 
   // map(daily)으로 꺼내면서 구입처별로 정렬한 객체를 반환
@@ -60,6 +60,8 @@ function App() {
   }
 
   return (
+    <>
+    <MainTitle>윤예나 님, 환영합니다!</MainTitle>
     <Container>
       <Form data={data} setData={setData} />
       <Household>
@@ -89,11 +91,22 @@ function App() {
         ))}
       </Household>
     </Container>
+    </>
   );
 }
 
 const Container = styled.div`
   display: flex;
+`;
+
+const MainTitle = styled.div`
+  height: 70px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 2.8em;
+  border-bottom: 1px solid #eee;
+  margin: 0 0 16px;
 `;
 
 export default App;
