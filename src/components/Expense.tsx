@@ -14,14 +14,14 @@ type ExpenseProps = {
 export default function Expense({ id, index, name, price, place, onRemove }: ExpenseProps) {
 	return (
 		<Wrapper>
-			<YellowTd align="center">{formatRoman(index)}</YellowTd>
-			<YellowTd align="left">{name}</YellowTd>
-			<YellowTd align="left">{formatMoney(price)}</YellowTd>
-			<YellowTd align="left">
-				{place}
+			<ExpenseTd align="center">&nbsp;&nbsp;{formatRoman(index)}</ExpenseTd>
+			<ExpenseTd align="left">&nbsp;&nbsp;{name}</ExpenseTd>
+			<ExpenseTd align="left">&nbsp;&nbsp;{formatMoney(price)}</ExpenseTd>
+			<ExpenseTd align="left">
+				&nbsp;&nbsp;{place}
 				{/* 삭제버튼 위치: 구입처 cell 내부 */}
 				<RemoveButton onClick={() => onRemove(id)}>&times;</RemoveButton>
-			</YellowTd>
+			</ExpenseTd>
 		</Wrapper>
 	);
 }
@@ -43,8 +43,9 @@ const RemoveButton = styled.div`
 	}
 `;
 
-const YellowTd = styled.td`
+const ExpenseTd = styled.td`
 	background: #ffff00;
 	color: #000;
 	text-align: ${props => props.align};
+	padding: 4px 0;
 `;

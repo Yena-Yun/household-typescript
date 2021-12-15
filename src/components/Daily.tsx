@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { formatDate } from 'lib/formatDate';
 import { formatMoney } from 'lib/formatMoney';
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 
 type DailyProps = {
 	index: number;
@@ -33,9 +33,9 @@ export default function Daily({ index, date, income, total, children, modify, se
 		<tbody>
 			<tr>
 				<IndexTd align="center" rowSpan={children.length + 5}>{index}</IndexTd>
-				<GreenTd align="center">날짜: {formatDate(date)}</GreenTd>
-				<GreenTd align="center">수입</GreenTd>
-				<GreenTd align="left" colSpan={2}>
+				<FieldTd align="center">{formatDate(date)}</FieldTd>
+				<FieldTd align="center">수입</FieldTd>
+				<IncomeTd align="left" colSpan={2}>
 					{modify ? (
 						<IncomeTextField
 							value={incomeValue}
@@ -46,67 +46,89 @@ export default function Daily({ index, date, income, total, children, modify, se
 						/>
 					) : (
 						<>
-							{formatMoney(income)}{" "}
+							&nbsp;&nbsp;{formatMoney(income)}{" "}
 							<ModifyButton onClick={() => setModify(index)}>
 								<EditIcon />
 							</ModifyButton>
 						</>
 					)}
-					</GreenTd>
+					</IncomeTd>
 			</tr>
 			<tr>
-				<GreenTd align="center">번호</GreenTd>
-				<GreenTd align="center">품목</GreenTd>
-				<GreenTd align="center">가격</GreenTd>
-				<GreenTd align="center">구입처</GreenTd>
+				<FieldTd align="center">번호</FieldTd>
+				<FieldTd align="center">품목</FieldTd>
+				<FieldTd align="center">가격</FieldTd>
+				<FieldTd align="center">구입처</FieldTd>
 			</tr>
 			{children}
 			<tr>
-				<LimeTd align="center">개수</LimeTd>
-				<LimeTd align="left" colSpan={3}>{children.length}</LimeTd>
+				<ResultTd align="center">개수</ResultTd>
+				<ResultTd align="left" colSpan={3}>&nbsp;&nbsp;{children.length}</ResultTd>
 			</tr>
 			<tr>
-				<LimeTd align="center">총지출</LimeTd>
-				<LimeTd align="left" colSpan={3}>{formatMoney(total)}</LimeTd>
+				<ResultTd align="center">총지출</ResultTd>
+				<ResultTd align="left" colSpan={3}>&nbsp;&nbsp;{formatMoney(total)}</ResultTd>
 			</tr>
 			<tr>
-				<LimeTd align="center">잔액</LimeTd>
-				<LimeTd align="left" colSpan={3} minus={income < total}>
-					{income < total ? '[적자]' : null}
+				<ResultTd align="center">잔액</ResultTd>
+				<ResultTd align="left" colSpan={3} minus={income < total}>
+					&nbsp;&nbsp;{income < total ? '[적자]' : null}
 					{formatMoney(income - total)}
-				</LimeTd>
+				</ResultTd>
 			</tr>
 		</tbody>
 	);
 }
 
 const IndexTd = styled.td`
-	background: #0000ff;
+	background: #835151;
 	color: #fff;
+	text-align: ${props => props.align};
+	padding: 0 4px;
 `;
 
-const GreenTd = styled.td`
-	background: #00ff00;
+const FieldTd = styled.td`
+	background: #c2f784;
 	color: #000;
 	text-align: ${props => props.align};
+	padding: 4px 0;
 `;
 
-const LimeTd = styled.td<LimeTdProps>`
-	background: #bfff00;
+const ResultTd = styled.td<LimeTdProps>`
+	background: #ffc1c1;
 	color: ${props => (props.minus ? "#ff0000" : "#000")};
 	text-align: ${props => props.align};
+	padding: 4px 0;
 `;
 
 const ModifyButton = styled.div`
-	font-size: 1rem;
 	float: right;
 	display: none;
 	cursor: pointer;
+	margin: -3px 0;
+`;
+
+const IncomeTd = styled.td`
+	background: #c2f784;
+	color: #000;
+	text-align: ${props => props.align};
+	padding: 4px 0;
+
+	// incomeTd에 hover하면 EditIcon 나타남
+	&:hover ${ModifyButton} {
+		display: block;
+	}
 `;
 
 const IncomeTextField = styled.input`
 	border: none;
 	background: transparent;
-	width: 100%;
+	width: 150px;
 	font-size: 1rem;
+	margin: 1px;
+
+	&:active {
+		border: none;
+		outline: none;
+	}
 `;

@@ -7,13 +7,18 @@ type HouseholdProps = {
 export default function Household({ children }: HouseholdProps) {
 	return (
 		<Wrapper>
-			<caption>가계부</caption>
-			{children}
+			<HouseholdTable>
+				<caption>가계부</caption>
+				{children}
+			</HouseholdTable>
 		</Wrapper>
 	);
 }
 
-const Wrapper = styled.table`
+const Wrapper = styled.div`
 	flex: 1;
 `;
 
+const HouseholdTable = styled.table`
+	width: 420px;
+`;

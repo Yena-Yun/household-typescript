@@ -39,6 +39,7 @@ export default function Form({ data, setData }: FormProps) {
 	const [name, setName] = useState('');
 	const [price, setPrice] = useState('');
 	const [place, setPlace] = useState('');
+	const [income, setIncome] = useState(0);
 	const classes = useStyles();
 
 	const handleAdd = (): void => {
@@ -50,24 +51,24 @@ export default function Form({ data, setData }: FormProps) {
 			return;
 		}
 
-		// getYear가 아닌 getFullYear가 웹 표준으로 바뀜
+		// ** getYear가 아닌 getFullYear가 웹 표준으로 바뀜
 		const year = date.getFullYear().toString();
-		const month = String(date.getMonth() + 1); // 1을 더해주는 과정에서 toString을 붙이기 곤란하기 때문에 String 사용
+		const month = String(date.getMonth() + 1); // (1을 더해주는 과정에서 toString을 붙이기 곤란하기 때문에 String 사용)
 		const day = date.getDate().toString();
 
-		// month와 day가 두 자리 숫자이면 그대로 반환하고 한 자리이면 앞에 '0'을 붙여 반환
+		// month와 day가 두 자리 숫자이면 그대로 반환하고 한 자리이면 앞에 '0'을 붙임
 		const strDate = year + (month[1] ? month : "0" + month) + (day[1] ? day : "0" + day);
-		
-		// 사용자가 입력한 date와 일치하는 date가 있는지 data에서 index를 조사 
-		const selectDailyIndex = data.findIndex(daily => daily.date === strDate);
 
-		// 추가나 수정 시 해당 데이터를 맨 뒤(또는 맨 앞)로 보내기 위해 maxId를 구함
+		// maxId 구하기: 추가나 수정 시 해당 데이터를 맨 뒤(또는 맨 앞)로 보내기 위해
 		const maxId = data.reduce((acc, daily) => {
 			const maxDailyId = daily.expenses.reduce((acc, expense) => (
 				expense.id > acc ? expense.id : acc
 			), 0);
 			return maxDailyId > acc ? maxDailyId : acc;
-		}, 0); 
+		}, 0);
+		
+		// 사용자가 입력한 date와 일치하는 date가 있는지 여부를 index로 조사 
+		const selectDailyIndex = data.findIndex(daily => daily.date === strDate);
 
 		// 기존 data에 없으면 새로 추가
 		if (selectDailyIndex === -1) {
@@ -77,7 +78,7 @@ export default function Form({ data, setData }: FormProps) {
 				// 새 daily를 넣어줌
 				{
 					date: strDate, // 날짜는 사용자가 입력한 날짜
-					income: 0, // 수입은 처음이니까 0
+					income: income, 
 					expenses: [ // 비용은 배열 안에 객체로
 						{
 							id: maxId + 1, // id는 맨 뒤 id에 +1
@@ -92,38 +93,46 @@ export default function Form({ data, setData }: FormProps) {
 		} else {
 			// 입력한 date와 다른 daily들은 싹 모아서 따로 담아두기
 			const filteredDaily = data.filter(daily => daily.date !== strDate);
-			// 입력한 date의 daily를 index를 이용해 따로 분리
+			// 입력한 날짜의 daily 객체를 index를 이용해 따로 분리
 			const selectedDaily = data[selectDailyIndex];
-			// 수정할 daily의 date와 income은 건드릴 필요 없음!
-			// 	=> 입력한 내용을 바탕으로 expenses만 추가
+			
+			// 입력한 내용을 바탕으로 expenses와 income 추가
 			selectedDaily.expenses.push({
 				id: maxId + 1,
 				name,
 				price: Number(price),
 				place
 			});
+
+			selectedDaily.income = Number(income);
 			// 따로 떼놓았던 기존 daily들과 함께 수정한 daily를 넣어줌
 			setData([...filteredDaily, selectedDaily]);
+			
+
+			console.log(selectedDaily.income);
+			console.log(data)
 		}
 
-		console.log(data)
-		console.log(strDate);
+		setName('');
+		setPrice('');
+		setPlace('');
+		setIncome(0);
 	}
 
 	return (
 		<Wrapper>
 			<MuiPickersUtilsProvider utils={DateFnsUtils} locale={koLocale}>
 				<KeyboardDatePicker
-					autoOk
 					variant="inline"
-					inputVariant="outlined"
 					margin="normal"
 					fullWidth
 					className={classes.textField}
-					format="yyyy/MM/dd"
-					label="날짜"
 					value={date}
 					onChange={(date: Date | null) => setDate(date)}
+					format="yyyy/MM/dd"
+					label="날짜"
+					inputVariant="outlined"
+					autoOk
 				/>
 			</MuiPickersUtilsProvider>
 			<br />
@@ -157,6 +166,19 @@ export default function Form({ data, setData }: FormProps) {
 				onChange={e => setPlace(e.target.value)}
 			/>
 			<br />
+			<TextField
+				variant="outlined"
+				margin="normal"
+				fullWidth
+				className={classes.textField}
+				label="수입"
+				value={income}
+				onChange={e => {
+					if (isNaN(Number(e.target.value))) return;
+					setIncome(Number(e.target.value));
+				}}
+			/>
+			<br />
 			<Button
 				onClick={() => handleAdd()}
 				variant="contained"
@@ -173,4 +195,6 @@ export default function Form({ data, setData }: FormProps) {
 const Wrapper = styled.div`
 	flex: 1;
 	text-align: center;
+	margin: 0 40px;
+	background: lightyellow;
 `;
