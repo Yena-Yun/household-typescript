@@ -8,7 +8,26 @@ import Expense from 'components/Expense';
 import Form from 'components/Form';
 
 function App() {
-  const [data, setData] = useState(initialData);
+  type DataType = {
+    date: string;
+    income: number;
+    expenses: {
+      id: number;
+      name: string;
+      price: number;
+      place: string;
+    }[];
+  }[];
+
+  // 로컬스토리지에서 data를 받아옴
+  const localData = localStorage.getItem('data');
+
+  // getData 
+  // 로컬스토리지에서 받아온 data가 있으면 해당 데이터를 json화 한 값,
+  // 없으면 data.json에서 가져온 초기 데이터(initialData)
+  const getData: DataType = localData ? JSON.parse(localData) : initialData;
+
+  const [data, setData] = useState(getData); // data의 초기값을 getData로 지정
   const [modify, setModify] = useState(0);
 
   // data를 날짜별로 정렬 후 
@@ -42,7 +61,10 @@ function App() {
       }
     });
 
-    // setData에 넣어줌
+    // 로컬스토리지에 문자열화 해서 넣어주고
+    localStorage.setItem('data', JSON.stringify(removedData));
+
+    // setData에도 넣어줌
     setData(removedData);
   };
 
@@ -56,6 +78,10 @@ function App() {
       idx !== index - 1 ? daily : { ...daily, income }
     );
 
+    // 로컬스토리지에 문자열화 해서 넣어주고
+    localStorage.setItem('data', JSON.stringify(modifiedData));
+
+    // setData에도 넣어줌
     setData(modifiedData);
   }
 
@@ -100,11 +126,11 @@ const Container = styled.div`
 `;
 
 const MainTitle = styled.div`
-  height: 70px;
-  font-size: 24px;
+  height: 60px;
+  font-size: 20px;
   font-weight: 700;
   text-align: center;
-  line-height: 2.8em;
+  line-height: 2.7em;
   border-bottom: 1px solid #eee;
   margin: 0 0 16px;
 `;

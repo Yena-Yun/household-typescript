@@ -72,7 +72,7 @@ export default function Form({ data, setData }: FormProps) {
 
 		// 기존 data에 없으면 새로 추가
 		if (selectDailyIndex === -1) {
-			setData([
+			const newData = [
 				// 기존 data에
 				...data,
 				// 새 daily를 넣어줌
@@ -88,7 +88,13 @@ export default function Form({ data, setData }: FormProps) {
 						}
 					]
 				}
-			])
+			]
+			
+			// 로컬스토리지에 문자열화 해서 넣어주고
+			localStorage.setItem('data', JSON.stringify(newData));
+			// setData에도 넣어줌
+			setData(newData)
+
 			// 기존 data에 이미 있으면 기존꺼 수정
 		} else {
 			// 입력한 date와 다른 daily들은 싹 모아서 따로 담아두기
@@ -103,16 +109,16 @@ export default function Form({ data, setData }: FormProps) {
 				price: Number(price),
 				place
 			});
-
 			selectedDaily.income = Number(income);
+
+			// 로컬스토리지에 문자열화 해서 넣어주고
+			localStorage.setItem('data', JSON.stringify([...filteredDaily, selectedDaily]));
+			
 			// 따로 떼놓았던 기존 daily들과 함께 수정한 daily를 넣어줌
 			setData([...filteredDaily, selectedDaily]);
-			
-
-			console.log(selectedDaily.income);
-			console.log(data)
 		}
 
+		// Form 내용 초기화
 		setName('');
 		setPrice('');
 		setPlace('');
