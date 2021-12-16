@@ -32,15 +32,15 @@ function App() {
 
   // data를 날짜별로 정렬 후 
   const sortedData = data.sort((a, b) => {
-    if (a.date > b.date) return -1;
-    else if (b.date > a.date) return 1;
+    if (a.date > b.date) return 1;
+    else if (b.date > a.date) return -1;
     else return 0;
 
   // map(daily)으로 꺼내면서 구입처별로 정렬한 객체를 반환
   }).map((daily) => {
     const sortedExpenses = daily.expenses.sort((a, b) => {
-      if (a.place > b.place) return -1;
-      else if (b.place > a.place) return 1;
+      if (a.place > b.place) return 1;
+      else if (b.place > a.place) return -1;
       else return 0;
     });
     return {
@@ -61,10 +61,7 @@ function App() {
       }
     });
 
-    // 로컬스토리지에 문자열화 해서 넣어주고
     localStorage.setItem('data', JSON.stringify(removedData));
-
-    // setData에도 넣어줌
     setData(removedData);
   };
 
@@ -78,16 +75,13 @@ function App() {
       idx !== index - 1 ? daily : { ...daily, income }
     );
 
-    // 로컬스토리지에 문자열화 해서 넣어주고
     localStorage.setItem('data', JSON.stringify(modifiedData));
-
-    // setData에도 넣어줌
     setData(modifiedData);
   }
 
   return (
     <>
-    <MainTitle>윤예나 님, 환영합니다!</MainTitle>
+    <MainTitle>My Household</MainTitle>
     <Container>
       <Form data={data} setData={setData} />
       <Household>

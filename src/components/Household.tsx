@@ -26,6 +26,5 @@ const HouseholdTable = styled.table`
 
 const Title = styled.div`
 	font-weight: 700;
-	/* text-align: center; */
 	margin: 12px 0 8px;
 `;
