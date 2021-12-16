@@ -1,5 +1,6 @@
 # household-typescript
-![household_image](https://user-images.githubusercontent.com/68722179/146308855-3da138c5-caee-4a21-a627-e74b72d4884c.png)
+
+<img src="https://user-images.githubusercontent.com/68722179/146308855-3da138c5-caee-4a21-a627-e74b72d4884c.png" width="500" />
 
 리액트로 만든 가계부를 타입스크립트 추가하여 다시 제작
 
